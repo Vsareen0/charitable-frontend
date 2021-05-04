@@ -87,7 +87,7 @@ const Header = (props) => {
 
         <div className="hidden sm:flex">
           <AppBarSection>
-            <ul>
+            <ul className="charitable-header-ul">
               <li>
                 <Link to="/">Home</Link>
               </li>
@@ -150,17 +150,17 @@ const Header = (props) => {
                 body {
                     background: #fafafa;
                 }
-                ul {
+                .charitable-header-ul {
                     font-size: 14px;
                     list-style-type: none;
                     padding: 0;
                     margin: 0;
                     display: flex;
                 }
-                li {
+                .charitable-header-ul > li {
                     margin: 0 10px;
                 }
-                li:hover {
+                .charitable-header-ul > li:hover {
                     cursor: pointer;
                     color: #ff545a;
                 }

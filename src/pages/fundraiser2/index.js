@@ -4,7 +4,7 @@ import { Button } from "@progress/kendo-react-buttons";
 import { Loader } from "@progress/kendo-react-indicators";
 import { Notification } from "@progress/kendo-react-notification";
 import { Fade } from "@progress/kendo-react-animation";
-import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
+// import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
 import { Stepper } from "@progress/kendo-react-layout";
 import { BasicDetails } from "./steppers/basic-details";
 import { CauseDetails } from "./steppers/cause-details";

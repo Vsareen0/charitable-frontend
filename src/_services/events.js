@@ -11,3 +11,15 @@ export const getByUsername = async () => {
 export const create = async (data) => {
   return await api.post("/events", { ...data });
 };
+
+export const deleteEvent = async (id) => {
+  const token = localStorage.getItem("token") || null;
+  return await api.delete("/events", {
+    headers: {
+      "x-auth-token": token,
+    },
+    data: {
+      id,
+    },
+  });
+};
