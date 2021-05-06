@@ -3,6 +3,7 @@ import { Field } from "@progress/kendo-react-form";
 import FloatingInput from "../../../components/form/FloatingInput";
 import { Editor } from "../../../components/form/Editor";
 import { RadioGroup } from "../../../components/form/RadioGroup";
+import { nameValidator } from "../../../validators";
 
 const data = [
   { label: "Medical", value: "medical" },
@@ -19,28 +20,29 @@ export const CauseDetails = (
         name={"cause_name"}
         label={"Cause Name"}
         component={FloatingInput}
-        type="cause_name"
+        type="text"
+        validator={nameValidator}
       />
       <Field
         id={"cause_type"}
         name={"cause_type"}
         label={"What is the cause ?"}
-        component={RadioGroup}
         data={data}
         layout={"horizontal"}
+        component={RadioGroup}
       />
       <Field
         id={"target_price"}
         name={"target_price"}
         label={"What is the targeted amount ?"}
-        component={FloatingInput}
         type="number"
+        component={FloatingInput}
       />
       <Field
         id={"description"}
         name={"description"}
+        type="text"
         component={Editor}
-        type="description"
       />
     </div>
   </div>

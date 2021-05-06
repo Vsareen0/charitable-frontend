@@ -3,11 +3,15 @@ import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
 import { Ripple } from "@progress/kendo-react-ripple";
 import { Notification } from "@progress/kendo-react-notification";
 import { Fade } from "@progress/kendo-react-animation";
+import { ListView } from "@progress/kendo-react-listview";
+import { Pager } from "@progress/kendo-react-data-tools";
 import { deleteEvent, getByUsername } from "../../_services/events";
 import MiniCard from "../../components/MiniCard";
 import image from "../../assets/random-1.svg";
 
 const Events = () => {
+  const [skip, setSkip] = useState(0);
+  const [take, setTake] = useState(3);
   const [events, setEvents] = useState([]);
   const [deleteId, setDeleteId] = useState("");
   const [message, setMessage] = useState("");
@@ -37,6 +41,11 @@ const Events = () => {
     setVisibleDialog(true);
   };
 
+  const handlePageChange = (e) => {
+    setSkip(e.skip);
+    setTake(e.take);
+  };
+
   const handleDelete = () => {
     deleteEvent(deleteId)
       .then((res) => {
@@ -49,9 +58,19 @@ const Events = () => {
       });
   };
 
+  const MiniCardItem = (props) => (
+    <MiniCard
+      {...props}
+      image={image}
+      iconType={"cog"}
+      items={items}
+      handleItemClick={handleItemClick}
+    />
+  );
+
   return (
     <>
-      <div className="container m-5 sm:m-10 w-11/12">
+      <div className="container m-5 sm:m-10 sm:mt-0 w-11/12">
         <Fade enter={true} exit={true}>
           {error && (
             <Notification
@@ -89,19 +108,19 @@ const Events = () => {
           </h2>
           <div className="mt-12 w-full flex justify-center ">
             <div className="flex flex-wrap w-full">
-              {events.map((card, index) => {
-                return (
-                  <div key={index}>
-                    <MiniCard
-                      image={image}
-                      data={card}
-                      iconType={"cog"}
-                      items={items}
-                      handleItemClick={handleItemClick}
-                    />
-                  </div>
-                );
-              })}
+              <ListView
+                data={events.slice(skip, skip + take)}
+                item={MiniCardItem}
+                style={{ border: "none", background: "none" }}
+              />
+              <Pager
+                skip={skip}
+                take={take}
+                onPageChange={handlePageChange}
+                total={events.length}
+                style={{ border: "none", background: "none" }}
+                className="w-full"
+              />
             </div>
           </div>
         </div>
@@ -137,6 +156,11 @@ const Events = () => {
           </Dialog>
         )}
       </div>
+      <style>{`
+        .k-listview-content {
+          display: flex; 
+        }
+      `}</style>
     </>
   );
 };

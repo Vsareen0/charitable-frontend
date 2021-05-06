@@ -7,37 +7,48 @@ import {
   CardImage,
   CardSubtitle,
 } from "@progress/kendo-react-layout";
+import { Slide } from "@progress/kendo-react-animation";
 import { DropDownButton } from "@progress/kendo-react-buttons";
 import dayjs from "dayjs";
 
-const MiniCard = ({ iconType, items, data, image, handleItemClick }) => {
-  let { cause_name: title, description: body, createdAt: date, _id } = data;
+const MiniCard = ({ iconType, items, dataItem, image, handleItemClick }) => {
+  let { cause_name: title, description: body, createdAt: date, _id } = dataItem;
   date = dayjs(date).format("DD-MM-YYYY H:mm");
 
   return (
-    <Card orientation="horizontal">
-      <CardImage src={image} />
-      <div className="k-vbox">
-        <CardHeader>
-          <div className="flex justify-between">
-            <div className="flex flex-col">
-              <CardTitle>{title}</CardTitle>
-              <CardSubtitle>{date}</CardSubtitle>
+    <Slide>
+      <Card orientation="horizontal" style={{ width: "360px" }}>
+        <CardImage src={image} />
+        <div className="k-vbox">
+          <CardHeader>
+            <div className="flex justify-between flex-grow">
+              <div className="flex flex-col">
+                <CardTitle>
+                  {title.length > 15 ? `${title.substring(0, 14)}...` : title}
+                </CardTitle>
+                <CardSubtitle>{date}</CardSubtitle>
+              </div>
+              <div>
+                <CardActions layout="end">
+                  <DropDownButton
+                    onItemClick={() => handleItemClick(_id)}
+                    items={items}
+                    icon={iconType}
+                  />
+                </CardActions>
+              </div>
             </div>
-            <div>
-              <CardActions layout="end">
-                <DropDownButton
-                  onItemClick={() => handleItemClick(_id)}
-                  items={items}
-                  icon={iconType}
-                />
-              </CardActions>
-            </div>
-          </div>
-        </CardHeader>
-        <CardBody>{body}</CardBody>
-      </div>
-    </Card>
+          </CardHeader>
+          <CardBody>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: body.length > 40 ? `${body.substring(0, 36)}...` : body,
+              }}
+            ></div>
+          </CardBody>
+        </div>
+      </Card>
+    </Slide>
   );
 };
 

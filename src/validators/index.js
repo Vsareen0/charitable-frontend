@@ -5,6 +5,9 @@ const passwordRegex = new RegExp(
 const phoneRegex = new RegExp(/^[0-9 ()+-]+$/);
 const htmlRegex = new RegExp(/<[^>]*>/g);
 
+export const nameValidator = (value) =>
+  value !== "" ? "" : "Please enter a name";
+
 export const emailValidator = (value) =>
   emailRegex.test(value) ? "" : "Please enter a valid email.";
 

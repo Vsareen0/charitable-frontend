@@ -46,6 +46,11 @@ const Fundraiser = () => {
       }));
 
       setSteps(currentSteps);
+
+      if (!isValid) {
+        return;
+      }
+
       setStep(() => Math.min(step + 1, lastStepIndex));
       setFormState(values);
 

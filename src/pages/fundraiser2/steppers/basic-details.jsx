@@ -1,7 +1,11 @@
 import React from "react";
-import { Form, Field, FormElement } from "@progress/kendo-react-form";
-import { FloatingMaskedTextBox } from "../../../components/form/FloatingMaskedTextBox";
+import { Field } from "@progress/kendo-react-form";
 import FloatingInput from "../../../components/form/FloatingInput";
+import {
+  emailValidator,
+  nameValidator,
+  phoneValidator,
+} from "../../../validators";
 
 export const BasicDetails = (
   <>
@@ -11,22 +15,25 @@ export const BasicDetails = (
           id={"name"}
           name={"name"}
           label={"Your Name"}
+          type="text"
           component={FloatingInput}
-          type="name"
+          validator={nameValidator}
         />
         <Field
           id={"email"}
           name={"email"}
           label={"Email"}
-          component={FloatingInput}
           type="email"
+          component={FloatingInput}
+          validator={emailValidator}
         />
         <Field
           id={"phone"}
           name={"phone"}
           label={"Phone"}
-          component={FloatingInput}
           type="phone"
+          component={FloatingInput}
+          validator={phoneValidator}
         />
       </div>
     </div>
