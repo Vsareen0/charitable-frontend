@@ -1,20 +1,43 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog, DialogActionsBar } from "@progress/kendo-react-dialogs";
 import { Ripple } from "@progress/kendo-react-ripple";
 import { Notification } from "@progress/kendo-react-notification";
+import { Grid, GridColumn } from "@progress/kendo-react-grid";
 import { Fade } from "@progress/kendo-react-animation";
 import { ListView } from "@progress/kendo-react-listview";
 import { Pager } from "@progress/kendo-react-data-tools";
 import { deleteEvent, getByUsername } from "../../_services/events";
 import MiniCard from "../../components/MiniCard";
-import image from "../../assets/random-1.svg";
+import { getAllPayments } from "../../_services/payment";
+import dayjs from "dayjs";
+import NoDataImg from "../../assets/no_data.svg";
 
+class ReceiptCell extends React.Component {
+  render() {
+    const { field, dataItem } = this.props;
+
+    return (
+      <td>
+        <a href={dataItem[field]} target="_blank" rel="noreferrer">
+          <u className="text-blue-500">{"View Receipt"} </u>
+        </a>
+      </td>
+    );
+  }
+}
+
+class DateCell extends React.Component {
+  render() {
+    const { field, dataItem } = this.props;
+    return <td>{dayjs.unix(dataItem[field]).format("DD-MM-YYYY")}</td>;
+  }
+}
 const Events = () => {
   const [skip, setSkip] = useState(0);
   const [take, setTake] = useState(3);
   const [events, setEvents] = useState([]);
+  const [payments, setPayments] = useState([]);
   const [deleteId, setDeleteId] = useState("");
-  const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [visibleDialog, setVisibleDialog] = useState(false);
@@ -23,9 +46,19 @@ const Events = () => {
     getByUsername()
       .then((res) => {
         if (res.status === 200) {
-          const { events, message } = res.data;
-          setMessage(message);
+          const { events } = res.data;
           setEvents(events);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    getAllPayments()
+      .then((res) => {
+        if (res.status === 200) {
+          const { payments } = res.data;
+          setPayments(payments);
         }
       })
       .catch((err) => console.error(err));
@@ -49,9 +82,12 @@ const Events = () => {
   const handleDelete = () => {
     deleteEvent(deleteId)
       .then((res) => {
-        setMessage(res.data.message);
-        setSuccess(true);
-        setVisibleDialog(false);
+        if (res.status === 202) {
+          let newEvents = events.filter((event) => event._id !== deleteId);
+          setEvents(newEvents);
+          setSuccess(true);
+          setVisibleDialog(false);
+        }
       })
       .catch((err) => {
         setError(true);
@@ -61,11 +97,19 @@ const Events = () => {
   const MiniCardItem = (props) => (
     <MiniCard
       {...props}
-      image={image}
       iconType={"cog"}
       items={items}
       handleItemClick={handleItemClick}
     />
+  );
+
+  const createFundraiser = (
+    <div className="w-full flex justify-center items-center flex-col">
+      <img src={NoDataImg} alt="Process Charitable" className="w-14 sm:w-16" />
+      <span className="text-gray-600 italic mt-4 text-xs sm:text-base">
+        We guess you have not found a cause to start something for.
+      </span>
+    </div>
   );
 
   return (
@@ -108,19 +152,24 @@ const Events = () => {
           </h2>
           <div className="mt-12 w-full flex justify-center ">
             <div className="flex flex-wrap w-full">
-              <ListView
-                data={events.slice(skip, skip + take)}
-                item={MiniCardItem}
-                style={{ border: "none", background: "none" }}
-              />
-              <Pager
-                skip={skip}
-                take={take}
-                onPageChange={handlePageChange}
-                total={events.length}
-                style={{ border: "none", background: "none" }}
-                className="w-full"
-              />
+              {events.length == 0 && createFundraiser}
+              {events.length > 0 && (
+                <>
+                  <ListView
+                    data={events.slice(skip, skip + take)}
+                    item={MiniCardItem}
+                    style={{ border: "none", background: "none" }}
+                  />
+                  <Pager
+                    skip={skip}
+                    take={take}
+                    onPageChange={handlePageChange}
+                    total={events.length}
+                    style={{ border: "none", background: "none" }}
+                    className="w-full"
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -130,6 +179,25 @@ const Events = () => {
             Contributions
             <span className="k-icon k-i-heart text-red-500"></span>
           </h2>
+          <div className="mt-12 w-full flex justify-center ">
+            <div className="flex flex-wrap w-full">
+              <Grid style={{ height: "300px" }} pageable={true} data={payments}>
+                <GridColumn field="description" title="Description" />
+                <GridColumn field="status" title="Status" />
+                <GridColumn field="amount" title="Amount" />
+                <GridColumn
+                  field="receipt_url"
+                  title="Receipt"
+                  cell={ReceiptCell}
+                />
+                <GridColumn
+                  field="linux_added_on"
+                  title="Date"
+                  cell={DateCell}
+                />
+              </Grid>
+            </div>
+          </div>
         </div>
         {visibleDialog && (
           <Dialog

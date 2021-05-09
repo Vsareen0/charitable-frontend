@@ -3,8 +3,8 @@ import { Field } from "@progress/kendo-react-form";
 import FloatingInput from "../../../components/form/FloatingInput";
 import {
   emailValidator,
-  nameValidator,
   phoneValidator,
+  requiredValidator,
 } from "../../../validators";
 
 export const BasicDetails = (
@@ -17,7 +17,7 @@ export const BasicDetails = (
           label={"Your Name"}
           type="text"
           component={FloatingInput}
-          validator={nameValidator}
+          validator={requiredValidator}
         />
         <Field
           id={"email"}

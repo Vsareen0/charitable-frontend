@@ -56,7 +56,7 @@ export const Upload = (fieldRenderProps) => {
         <Avatar
           style={{ width: 100, height: 100, flexBasis: 100 }}
           className="w-6"
-          shape={"circle"}
+          shape={"rectangle"}
           type={"image"}
         >
           {hasImage ? (
@@ -79,8 +79,7 @@ export const Upload = (fieldRenderProps) => {
         <KendoUpload
           id={id}
           valid={valid}
-          autoUpload={false}
-          showActionButtons={false}
+          showActionButtons={true}
           multiple={false}
           files={value}
           onAdd={onChangeHandler}

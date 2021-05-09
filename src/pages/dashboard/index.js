@@ -2,8 +2,7 @@ import * as React from "react";
 import { withRouter } from "react-router-dom";
 
 import { Drawer, DrawerContent } from "@progress/kendo-react-layout";
-import Welcome from "./welcome";
-// import { Button } from "@progress/kendo-react-buttons";
+import Events from "./events";
 
 const items = [
   {
@@ -34,7 +33,6 @@ class DrawerRouterContainer extends React.Component {
   };
 
   setSelectedItem = (pathName) => {
-    console.log(pathName);
     let currentPath = items.find((item) => item.route === pathName);
     if (currentPath.text) {
       return currentPath.text;
@@ -46,9 +44,6 @@ class DrawerRouterContainer extends React.Component {
     return (
       <>
         <div className="container mt-1 w-full hidden sm:block">
-          {/* <div className="w-14 bg-white text-center">
-          <Button icon="menu" look="flat" onClick={this.handleClick} />
-        </div> */}
           <Drawer
             expanded={this.state.expanded}
             position={"start"}
@@ -60,13 +55,14 @@ class DrawerRouterContainer extends React.Component {
             }))}
             onSelect={this.onSelect}
           >
-            <DrawerContent>{this.props.children}</DrawerContent>
+            <DrawerContent>
+              {this.props.location.pathname === "/dashboard" && <Events />}
+              {this.props.location.pathName !== "/dashboard" &&
+                this.props.children}
+            </DrawerContent>
           </Drawer>
         </div>
         <div className="container mt-1 w-full block sm:hidden">
-          {/* <div className="w-14 bg-white text-center">
-          <Button icon="menu" look="flat" onClick={this.handleClick} />
-        </div> */}
           <Drawer
             expanded={false}
             position={"start"}

@@ -1,22 +1,13 @@
 import * as React from "react";
 
-import { useLocalization } from "@progress/kendo-react-intl";
 import { useHistory } from "react-router-dom";
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import { Button } from "@progress/kendo-react-buttons";
 
 import { Input } from "../../components/form/Input";
 import { MaskedTextBox } from "../../components/form/MaskedTextBox";
-// import { DropDownList } from "./../components/form/DropDownList";
 import { Editor } from "../../components/form/Editor";
 import { Upload } from "../../components/form/Upload";
-// import { RadioGroup } from "./../components/form/RadioGroup";
-// import { Switch } from "../../components/form/Switch";
-
-// import { AppContext } from "./../AppContext";
-
-// import { countries } from "./../resources/countries";
-// import { teams } from "./../resources/teams";
 
 import {
   requiredValidator,
@@ -24,12 +15,6 @@ import {
   phoneValidator,
   biographyValidator,
 } from "../../validators";
-
-// const countriesData = countries.map((country) => country.name);
-// const teamsData = teams.map((team) => ({
-//   value: team.teamID,
-//   label: team.teamName,
-// }));
 
 const Profile = () => {
   //   const {

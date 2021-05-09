@@ -11,13 +11,19 @@ import { Slide } from "@progress/kendo-react-animation";
 import { DropDownButton } from "@progress/kendo-react-buttons";
 import dayjs from "dayjs";
 
-const MiniCard = ({ iconType, items, dataItem, image, handleItemClick }) => {
-  let { cause_name: title, description: body, createdAt: date, _id } = dataItem;
+const MiniCard = ({ iconType, items, dataItem, handleItemClick }) => {
+  let {
+    cause_name: title,
+    description: body,
+    createdAt: date,
+    _id,
+    image,
+  } = dataItem;
   date = dayjs(date).format("DD-MM-YYYY H:mm");
 
   return (
     <Slide>
-      <Card orientation="horizontal" style={{ width: "360px" }}>
+      <Card orientation="horizontal" style={{ width: "360px", margin: "10px" }}>
         <CardImage src={image} />
         <div className="k-vbox">
           <CardHeader>

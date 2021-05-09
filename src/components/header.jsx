@@ -1,5 +1,5 @@
 import logo from "../assets/logo.png";
-import React, { useEffect } from "react";
+import React from "react";
 import charity from "../assets/charity-box.png";
 import { Ripple } from "@progress/kendo-react-ripple";
 import { Link } from "react-router-dom";
@@ -7,7 +7,6 @@ import {
   AppBar,
   AppBarSection,
   AppBarSpacer,
-  // Avatar,
   Drawer,
   DrawerContent,
 } from "@progress/kendo-react-layout";

@@ -1,15 +1,20 @@
 import { api } from "./index";
 import { authenticationService } from "./authentication.service";
 
+export const create = async (data) => {
+  const { username } = authenticationService.currentUserValue;
+  return await api.post("/events", { ...data }, { headers: { username } });
+};
+
 export const getByUsername = async () => {
   const { username } = authenticationService.currentUserValue;
   return await api.get("/events/findBy", {
-    params: { username },
+    params: { creator: username },
   });
 };
 
-export const create = async (data) => {
-  return await api.post("/events", { ...data });
+export const getEvents = async () => {
+  return await api.get("/events");
 };
 
 export const deleteEvent = async (id) => {
@@ -22,4 +27,18 @@ export const deleteEvent = async (id) => {
       id,
     },
   });
+};
+
+export const checkout = async (data) => {
+  const { email, _id } = authenticationService.currentUserValue;
+
+  return await api.post(
+    `/events/checkout-session`,
+    {
+      data,
+    },
+    {
+      headers: { email, _id },
+    }
+  );
 };

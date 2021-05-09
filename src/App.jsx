@@ -10,6 +10,7 @@ import Register from "./pages/register";
 // import CreateFundraiser from "./pages/fundraiser";
 import CreateFundraiser from "./pages/fundraiser2";
 import Dashboard from "./pages/dashboard";
+import Checkout from "./pages/checkout";
 import Profile from "./pages/dashboard/profile";
 import Settings from "./pages/dashboard/settings";
 import Events from "./pages/dashboard/events";
@@ -39,11 +40,12 @@ class App extends Component {
               <Login />
             </Route>
             <Route path="/register" component={Register} />
+            <Route path="/checkout" component={Checkout} />
             <PrivateRoute
               path="/create-fundraiser"
               component={CreateFundraiser}
             />
-            <PrivateRoute path="/dashboard" component={Dashboard}>
+            <PrivateRoute path="/dashboard">
               <Dashboard>
                 <Switch>
                   <PrivateRoute path="/dashboard/profile" component={Profile} />

@@ -7,12 +7,16 @@ class ArcGaugeComponent extends React.Component {
 
     this.state = {
       value: 0,
+      value2: 0,
     };
   }
 
   componentDidMount() {
+    const { target_price = 0, raised = 0 } = this.props;
+
     this.setState({
       value: Math.ceil(Math.random() * 100),
+      value2: ((raised / target_price) * 100).toFixed(1),
     });
   }
 
@@ -23,7 +27,7 @@ class ArcGaugeComponent extends React.Component {
     ];
 
     const arcOptions = {
-      value: this.state.value,
+      value: this.state.value2,
       colors,
     };
 
