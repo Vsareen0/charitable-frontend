@@ -37,7 +37,8 @@ const MiniCard = ({ iconType, items, dataItem, handleItemClick }) => {
               <div>
                 <CardActions layout="end">
                   <DropDownButton
-                    onItemClick={() => handleItemClick(_id)}
+                    // onItemClick={() => handleItemClick(_id)}
+                    onItemClick={(e) => handleItemClick(e, _id)}
                     items={items}
                     icon={iconType}
                   />

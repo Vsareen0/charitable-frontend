@@ -14,7 +14,7 @@ const Done = () => {
             Let's head over to dashboard and view your campaigns.
           </p>
         </div>
-        <Link to="/dashboard/events">
+        <Link to="/dashboard">
           <button type="button" className="k-button">
             Go to Dashboard
           </button>

@@ -69,9 +69,14 @@ const Events = () => {
     { text: "Delete", icon: "trash" },
   ];
 
-  const handleItemClick = (e) => {
-    setDeleteId(e);
-    setVisibleDialog(true);
+  const handleItemClick = (e, _id) => {
+    if (e.item.text.toLowerCase() == "edit") {
+      console.log(e.item.text.toLowerCase(), " ", _id);
+    }
+    if (e.item.text.toLowerCase() === "delete") {
+      setDeleteId(_id);
+      setVisibleDialog(true);
+    }
   };
 
   const handlePageChange = (e) => {

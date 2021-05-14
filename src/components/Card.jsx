@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -13,7 +13,18 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { loadStripe } from "@stripe/stripe-js";
 import ArcGaugeComponent from "./ArcGauge";
 import { checkout } from "../_services/events";
-import { useEffect } from "react";
+import { formatCash, intToString } from "../_helpers/currency";
+import {
+  load,
+  loadMessages,
+  LocalizationProvider,
+} from "@progress/kendo-react-intl";
+import { MessageComponent } from "../components/MessageComponent";
+
+import {
+  registerForIntl,
+  provideIntlService,
+} from "@progress/kendo-react-intl";
 
 const stripePromise = loadStripe(
   "pk_test_51IiCLhSCMiRl8J6iMpJatcL2HQAEetwuQn0zlXvsnfAJNAo1gBCCFYeFeetmYkbMtD9WRzktl3L4uVgsAUe7kbdC00RDqc4DYY"
@@ -111,7 +122,7 @@ const EventCard = ({ dataItem, totals }) => {
                 (title.length > 10 ? title.substring(0, 22) + " ..." : title)}
             </span>
             <div className="mt-8 w-full flex">
-              <div className="w-3/6">
+              <div className="w-3/6 text-center">
                 {complete && (
                   <ArcGaugeComponent
                     raised={raised}
@@ -120,7 +131,11 @@ const EventCard = ({ dataItem, totals }) => {
                 )}
                 <br />
                 <span className="text-sm sm:text-base font-semibold text-blueGray-900">
-                  ₹{raised}
+                  {new Intl.NumberFormat("en-IN", {
+                    style: "currency",
+                    currency: "INR",
+                  }).format(raised)}
+                  {/* {provideIntlService(EventCard).formatNumber(raised, "c")} */}
                 </span>
                 <br />
                 <span className="text-xs sm:text-sm font-normal">Raised</span>
@@ -184,4 +199,5 @@ const EventCard = ({ dataItem, totals }) => {
   );
 };
 
+registerForIntl(EventCard);
 export default EventCard;

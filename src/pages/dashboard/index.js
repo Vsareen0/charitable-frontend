@@ -15,7 +15,7 @@ const items = [
     icon: "k-i-user",
     route: "/dashboard/profile",
   },
-  { text: "Events", icon: "k-i-calendar", route: "/dashboard/events" },
+  // { text: "Events", icon: "k-i-calendar", route: "/dashboard/events" },
   { separator: true },
   { text: "Settings", icon: "k-i-cog", route: "/dashboard/settings" },
 ];

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { ListView } from "@progress/kendo-react-listview";
 import { Pager } from "@progress/kendo-react-data-tools";
+import IntroSection from "./intro.jsx";
 import EventCard from "../components/Card";
-import IntroSection from "../components/intro.jsx";
 import { getEvents } from "../_services/events";
 
 const Home = () => {
